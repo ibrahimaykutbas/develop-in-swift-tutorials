@@ -40,8 +40,8 @@ struct ContentView: View {
             TextField("Add new name", text: $nameToAdd)
                 .autocorrectionDisabled()
                 .onSubmit {
-                    if !nameToAdd.isEmpty {
-                        names.append(nameToAdd)
+                    if !nameToAdd.isEmpty, !names.contains(nameToAdd) {
+                        names.append(nameToAdd.trimmingCharacters(in: .whitespaces))
                         nameToAdd = ""
                     }
                 }

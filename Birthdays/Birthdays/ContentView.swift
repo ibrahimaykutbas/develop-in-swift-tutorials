@@ -2,11 +2,12 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Query(sort: \Friend.birthday) private var friends: [Friend] = []
+    @Query(sort: \Friend.name) private var friends: [Friend] = []
     @Environment(\.modelContext) private var context
     
     @State private var newName = ""
     @State private var newDate = Date.now
+    @State private var newNote = ""
     
     var body: some View {
         NavigationStack {
@@ -23,6 +24,10 @@ struct ContentView: View {
                     
                     Text(friend.birthday, format: .dateTime.month(.wide).day().year())
                 }
+                
+                if !friend.note.isEmpty {
+                    Text(friend.note)
+                }
             }
             .navigationTitle("Birthdays")
             .safeAreaInset(edge: .bottom) {
@@ -35,12 +40,16 @@ struct ContentView: View {
                             .textFieldStyle(.roundedBorder)
                     }
                     
+                    TextField("Note", text: $newNote)
+                        .textFieldStyle(.roundedBorder)
+                    
                     Button("Save") {
-                        let newFriend = Friend(name: newName, birthday: newDate)
+                        let newFriend = Friend(name: newName, birthday: newDate, note: newNote)
                         context.insert(newFriend)
                         
                         newName = ""
                         newDate = .now
+                        newNote = ""
                     }
                     .bold()
                 }

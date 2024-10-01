@@ -32,6 +32,7 @@ struct ContentView: View {
             .padding()
             .labelStyle(.iconOnly)
             .font(.title)
+//            .symbolRenderingMode(.monochrome)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

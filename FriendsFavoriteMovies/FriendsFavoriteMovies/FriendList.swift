@@ -3,51 +3,54 @@ import SwiftData
 
 struct FriendList: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Friend.name) private var friends: [Friend]
+    @Query private var friends: [Friend]
     
     @State private var newFriend: Friend?
     
+    init(nameFilter: String = "") {
+        let predicate = #Predicate<Friend> { friend in
+            nameFilter.isEmpty || friend.name.localizedStandardContains(nameFilter)
+        }
+        
+        _friends = Query(filter: predicate, sort: \Friend.name)
+    }
+    
     var body: some View {
-        NavigationSplitView {
-            Group {
-                if !friends.isEmpty {
-                    List {
-                        ForEach(friends) { friend in
-                            NavigationLink {
-                                FriendDetail(friend: friend)
-                            } label: {
-                                Text(friend.name)
-                            }
+        Group {
+            if !friends.isEmpty {
+                List {
+                    ForEach(friends) { friend in
+                        NavigationLink {
+                            FriendDetail(friend: friend)
+                        } label: {
+                            Text(friend.name)
                         }
-                        .onDelete(perform: deleteFriends)
                     }
-                } else {
-                    ContentUnavailableView {
-                        Label("No Friends", systemImage: "person.and.person")
-                    }
+                    .onDelete(perform: deleteFriends)
+                }
+            } else {
+                ContentUnavailableView {
+                    Label("No Friends", systemImage: "person.and.person")
                 }
             }
-            .navigationTitle("Friends")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    EditButton()
-                }
-                
-                ToolbarItem {
-                    Button(action: addFriend) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+        }
+        .navigationTitle("Friends")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                EditButton()
+            }
+            
+            ToolbarItem {
+                Button(action: addFriend) {
+                    Label("Add Item", systemImage: "plus")
                 }
             }
-            .sheet(item: $newFriend) { friend in
-                NavigationStack {
-                    FriendDetail(friend: friend, isNew: true)
-                }
-                .interactiveDismissDisabled()
+        }
+        .sheet(item: $newFriend) { friend in
+            NavigationStack {
+                FriendDetail(friend: friend, isNew: true)
             }
-        } detail: {
-            Text("Select a friend")
-                .navigationTitle("Friend")
+            .interactiveDismissDisabled()
         }
     }
     
@@ -71,4 +74,18 @@ struct FriendList: View {
 #Preview {
     FriendList()
         .modelContainer(SampleData.shared.modelContainer)
+}
+
+#Preview("Empty List") {
+    NavigationStack {
+        FriendList()
+            .modelContainer(for: Friend.self, inMemory: true)
+    }
+}
+
+#Preview("Filtered") {
+    NavigationStack {
+        FriendList(nameFilter: "y")
+            .modelContainer(SampleData.shared.modelContainer)
+    }
 }

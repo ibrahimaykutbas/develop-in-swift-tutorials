@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct MovieDetail: View {
     @Bindable var movie: Movie
@@ -29,6 +30,7 @@ struct MovieDetail: View {
                     ForEach(sortedFriends) { friend in
                         Text(friend.name)
                     }
+                    .onDelete(perform: deleteItems)
                 }
             }
         }
@@ -48,6 +50,14 @@ struct MovieDetail: View {
                         dismiss()
                     }
                 }
+            }
+        }
+    }
+    
+    func deleteItems(offset: IndexSet) {
+        withAnimation {
+            for index in offset {
+                movie.favoritedBy.remove(at: index)
             }
         }
     }

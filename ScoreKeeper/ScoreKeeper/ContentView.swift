@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var scoreboard = Scoreboard()
     @State private var startingPoints = 0
+    @State private var winningPoint = 20
     
     var colorPallete: [Color] = [.blue, .yellow, .green, .red, .orange]
     
@@ -14,7 +15,7 @@ struct ContentView: View {
                 .padding(.bottom)
             
             SettingsView(
-                doesHighesScoreWin: $scoreboard.doesHighestScoreWin, startingPoints: $startingPoints)
+                doesHighesScoreWin: $scoreboard.doesHighestScoreWin, startingPoints: $startingPoints, winningPoint: $winningPoint)
             .disabled(scoreboard.state != .setup)
             
             Grid {
@@ -41,9 +42,15 @@ struct ContentView: View {
                         Text("\(player.score)")
                             .opacity(scoreboard.state == .setup ? 0 : 1.0)
                         
-                        Stepper("\(player.score)", value: $player.score, in: 0...20)
+                        Stepper("\(player.score)", value: $player.score, in: 0...winningPoint)
                             .labelsHidden()
                             .opacity(scoreboard.state == .setup ? 0 : 1.0)
+                            .onChange(of: player.score) {
+                                if player.score == winningPoint {
+                                    scoreboard.state = .gameOver
+                                }
+                            }
+                            .disabled(scoreboard.state == .gameOver)
                         
                     }
                 }

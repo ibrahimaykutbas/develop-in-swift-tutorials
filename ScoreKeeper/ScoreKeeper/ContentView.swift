@@ -30,7 +30,7 @@ struct ContentView: View {
                             .foregroundColor(player.color)
                         Text("\(player.score)")
                         
-                        Stepper("\(player.score)", value: $player.score)
+                        Stepper("\(player.score)", value: $player.score, in: 0...20)
                             .labelsHidden()
                     }
                 }

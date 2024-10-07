@@ -1,13 +1,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var players: [Player] = [
-        Player(name: "Elisha", score: 0, color: .blue),
-        Player(name: "Andre", score: 0, color: .yellow),
-        Player(name: "Jasmine", score: 0, color: .green)
-    ]
-   
+    @State private var scoreboard = Scoreboard()
+    
     var colorPallete: [Color] = [.blue, .yellow, .green, .red, .orange]
+    
+    private var startingPoints = 0
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,13 +22,13 @@ struct ContentView: View {
                 }
                 .font(.headline)
                 
-                ForEach($players) { $player in
+                ForEach($scoreboard.players) { $player in
                     GridRow {
                         TextField("Name", text: $player.name)
                             .foregroundColor(player.color)
                         Text("\(player.score)")
                         
-                        Stepper("\(player.score)", value: $player.score, in: 0...20)
+                        Stepper("\(player.score)", value: $player.score)
                             .labelsHidden()
                     }
                 }
@@ -38,10 +36,26 @@ struct ContentView: View {
             .padding(.vertical)
             
             Button("Add Player", systemImage: "plus") {
-                players.append(Player(name: "", score: 0, color: colorPallete.randomElement()! ))
+                scoreboard.players.append(Player(name: "", score: 0, color: colorPallete.randomElement()! ))
             }
             
             Spacer()
+            
+            switch scoreboard.state {
+            case .setup:
+                Button("Start Game", systemImage: "play.fill") {
+                    scoreboard.state = .playing
+                    scoreboard.resetScores(to: startingPoints)
+                }
+            case .playing:
+                Button("End Game", systemImage: "stop.fill") {
+                    scoreboard.state = .gameOver
+                }
+            case .gameOver:
+                Button("Reset Game", systemImage: "arrow.counterclockwise") {
+                    scoreboard.state = .setup
+                }
+            }
         }
         .padding()
     }

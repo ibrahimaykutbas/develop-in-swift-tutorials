@@ -2,11 +2,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var players: [Player] = [
-        Player(name: "Elisha", score: 0),
-        Player(name: "Andre", score: 0),
-        Player(name: "Jasmine", score: 0)
+        Player(name: "Elisha", score: 0, color: .blue),
+        Player(name: "Andre", score: 0, color: .yellow),
+        Player(name: "Jasmine", score: 0, color: .green)
     ]
-    
+   
+    var colorPallete: [Color] = [.blue, .yellow, .green, .red, .orange]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,6 +27,7 @@ struct ContentView: View {
                 ForEach($players) { $player in
                     GridRow {
                         TextField("Name", text: $player.name)
+                            .foregroundColor(player.color)
                         Text("\(player.score)")
                         
                         Stepper("\(player.score)", value: $player.score)
@@ -36,7 +38,7 @@ struct ContentView: View {
             .padding(.vertical)
             
             Button("Add Player", systemImage: "plus") {
-                players.append(Player(name: "", score: 0))
+                players.append(Player(name: "", score: 0, color: colorPallete.randomElement()! ))
             }
             
             Spacer()

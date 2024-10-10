@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B17BE892CB81EA10001058A /* Alphabetizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17BE882CB81E9C0001058A /* Alphabetizer.swift */; };
+		1B17BE8B2CB824ED0001058A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B17BE8A2CB824E90001058A /* Message.swift */; };
 		2812270C2C12510700E710A5 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281227092C12510700E710A5 /* Tile.swift */; };
 		2812270D2C12510700E710A5 /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812270A2C12510700E710A5 /* Vocabulary.swift */; };
 		281227152C12514700E710A5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812270E2C12514600E710A5 /* ContentView.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B17BE882CB81E9C0001058A /* Alphabetizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alphabetizer.swift; sourceTree = "<group>"; };
+		1B17BE8A2CB824E90001058A /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		281227092C12510700E710A5 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		2812270A2C12510700E710A5 /* Vocabulary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		2812270E2C12514600E710A5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 		2812270B2C12510700E710A5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1B17BE8A2CB824E90001058A /* Message.swift */,
+				1B17BE882CB81E9C0001058A /* Alphabetizer.swift */,
 				281227092C12510700E710A5 /* Tile.swift */,
 				2812270A2C12510700E710A5 /* Vocabulary.swift */,
 			);
@@ -180,6 +186,8 @@
 				281227192C12514700E710A5 /* TileView.swift in Sources */,
 				281227152C12514700E710A5 /* ContentView.swift in Sources */,
 				2812270D2C12510700E710A5 /* Vocabulary.swift in Sources */,
+				1B17BE8B2CB824ED0001058A /* Message.swift in Sources */,
+				1B17BE892CB81EA10001058A /* Alphabetizer.swift in Sources */,
 				281227182C12514700E710A5 /* SubmitButton.swift in Sources */,
 				281227162C12514700E710A5 /* MessageView.swift in Sources */,
 				281227172C12514700E710A5 /* ScoreView.swift in Sources */,
